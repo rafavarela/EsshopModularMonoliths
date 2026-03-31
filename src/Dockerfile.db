@@ -1,0 +1,13 @@
+FROM postgres:18.3-bookworm
+
+RUN apt-get update && apt-get install -y locales \
+    && echo "es_CO.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen es_CO.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set as default for the container
+ENV LANG=es_CO.UTF-8
+ENV LANGUAGE=es_CO:es
+ENV LC_ALL=es_CO.UTF-8
+ENV LC_COLLATE=es_CO.UTF-8
+ENV LC_CTYPE=es_CO.UTF-8
