@@ -4,10 +4,5 @@ services:
       context: .
       dockerfile: Dockerfile.db
 
-  eshopapi:
-    build:
-      context: ./Bootstrapper/Api
-      dockerfile: Dockerfile
-    
 volumes:
   postgres_eshopdb: 
