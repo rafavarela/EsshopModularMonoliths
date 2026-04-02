@@ -19,7 +19,7 @@ public static class BasketModule
         return services;
     }
 
-    public static IApplicationBuilder UseBasketModule(
+    public static async Task<IApplicationBuilder> UseBasketModule(
         this IApplicationBuilder app)
     {
         // Configure the HTTP request pipeline.

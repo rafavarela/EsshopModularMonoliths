@@ -19,14 +19,10 @@ public static class OrderingModule
         return services;
     }
 
-    public static IApplicationBuilder UseOrderingModule(
+    public static async Task<IApplicationBuilder> UseOrderingModule(
         this IApplicationBuilder app)
     {
         // Configure the HTTP request pipeline.
-        //app
-        //    .UseApplicationServices()
-        //    .UseInfrastructureServices(configuration)
-        //    .UseApiServices(configuration);
 
         return app;
     }
