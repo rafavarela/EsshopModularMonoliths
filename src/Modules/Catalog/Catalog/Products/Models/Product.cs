@@ -32,6 +32,7 @@ public class Product : Aggregate<Guid>
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+
         Name = name;
         Category = category;
         Description = description;
