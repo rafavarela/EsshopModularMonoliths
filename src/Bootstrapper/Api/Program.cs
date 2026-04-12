@@ -10,6 +10,9 @@ builder.Services
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
+builder.Services
+    .AddExceptionHandler<CustomExceptionHandler>();
+
 
 var app = builder.Build();
 
@@ -20,4 +23,7 @@ await app.UseCatalogModule();
 await app.UseBasketModule();
 await app.UseOrderingModule();
 
-app.Run();
+// Exception handling
+app.UseExceptionHandler(options => { });
+
+app.Run(); 

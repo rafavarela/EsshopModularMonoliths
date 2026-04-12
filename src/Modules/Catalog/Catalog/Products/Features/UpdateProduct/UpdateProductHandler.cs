@@ -5,6 +5,18 @@ public record UpdateProductCommand(ProductDto Product)
 
 public record UpdateProductResult(bool IsSuccess);
 
+// Create command validator using FluentValidation
+public class UpdateProductCommandValidator : 
+    AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(x => x.Product.Id).NotEmpty().WithMessage("Id is required");
+        RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Name is required");
+        RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+    }
+}
+
 public class UpdateProductHandler(CatalogDBContext dbContext)
     : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
@@ -17,7 +29,7 @@ public class UpdateProductHandler(CatalogDBContext dbContext)
 
         if (product is null) 
         {
-            throw new Exception($"Product not found: {command.Product.Id}");
+            throw new ProductNotFoundException(command.Product.Id);
         }
 
         // Update product entity from command object

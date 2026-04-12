@@ -1,9 +1,22 @@
-﻿namespace Catalog.Products.Features.DeleteProduct;
+﻿using FluentValidation;
+
+namespace Catalog.Products.Features.DeleteProduct;
 
 public record DeleteProductCommand(Guid ProductId) 
     : ICommand<DeleteProductResult>;
 
 public record DeleteProductResult(bool IsSuccess);
+
+// Create command validator using FluentValidation
+public class DeleteProductCommandValidator : 
+    AbstractValidator<DeleteProductCommand>
+{
+    public DeleteProductCommandValidator()
+    {
+        RuleFor(x => x.ProductId).NotEmpty().WithMessage("ProductId is required");
+    }
+}
+
 
 public class DeleteProductHandler(CatalogDBContext dbContext)
     : ICommandHandler<DeleteProductCommand, DeleteProductResult>
@@ -17,7 +30,7 @@ public class DeleteProductHandler(CatalogDBContext dbContext)
 
         if (product is null)
         {
-            throw new Exception($"Product not found: {command.ProductId}");
+            throw new ProductNotFoundException(command.ProductId);
         }
 
         // Delete product entity from command object

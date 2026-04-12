@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviors;
 using Shared.Data.Interceptors;
 
 namespace Catalog;
@@ -20,7 +22,11 @@ public static class CatalogModule
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
+
+        // Add validators from Assembly
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Add Data - Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");
