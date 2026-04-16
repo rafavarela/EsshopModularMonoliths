@@ -23,6 +23,7 @@ public static class CatalogModule
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            cfg.AddOpenBehavior(typeof(LogginBehavior<,>));
         });
 
         // Add validators from Assembly

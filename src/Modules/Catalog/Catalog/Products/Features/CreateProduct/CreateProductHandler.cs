@@ -20,15 +20,12 @@ public class CreateProductCommandValidator :
 }
 
 public class CreateProductHandler(
-    CatalogDBContext dbContext,
-    ILogger<CreateProductHandler> logger) :
+    CatalogDBContext dbContext) :
     ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, 
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("CreateProductHandler.Handle called with {@Command}", command);
-
         // Create product entity from command object
         var product = CreateNewProduct(command.Product);
 
