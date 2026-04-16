@@ -20,4 +20,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s   # optional: give Postgres time to initialize on first start
- 
+  seq:
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=true
+    restart: always
+    ports:
+      - "5341:5341"
+      - "9091:80"

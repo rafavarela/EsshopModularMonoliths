@@ -4,5 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile.db
 
+  seq:
+    image: datalust/seq:2025.2
+
 volumes:
   postgres_eshopdb: 
