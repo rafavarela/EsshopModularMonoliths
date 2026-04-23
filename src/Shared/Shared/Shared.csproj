@@ -20,6 +20,10 @@
 	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
 	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
+
+	<!-- Force consistent Roslyn version to resolve NU1608 conflict -->
+	<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
+	<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
   </ItemGroup>
 
 </Project>

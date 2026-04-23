@@ -19,15 +19,6 @@ public static class CatalogModule
         // Add Endpoint services
 
         // Add Application use case services
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            cfg.AddOpenBehavior(typeof(LogginBehavior<,>));
-        });
-
-        // Add validators from Assembly
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Add Data - Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");

@@ -5,9 +5,17 @@ builder.Host.UseSerilog((context, configuration) =>
 
 // Add services to the container
 
-builder.Services.AddCarterWithAssemblies(
-    typeof(CatalogModule).Assembly);
+// Common services for all modules
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
 
+builder.Services
+    .AddCarterWithAssemblies(catalogAssembly, basketAssembly);
+
+builder.Services
+    .AddMediatRWithAssemblies(catalogAssembly, basketAssembly);
+
+// Module specific services
 builder.Services
     .AddCatalogModule(builder.Configuration)
     .AddBasketModule(builder.Configuration)
