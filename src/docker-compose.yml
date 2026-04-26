@@ -4,6 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile.db
 
+  distributedcache:
+    image: redis:8.0
+
   seq:
     image: datalust/seq:2025.2
 
