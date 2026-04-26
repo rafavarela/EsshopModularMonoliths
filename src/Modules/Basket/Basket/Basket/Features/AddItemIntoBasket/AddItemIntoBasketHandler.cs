@@ -1,4 +1,6 @@
-﻿namespace Basket.Basket.Features.AddItemIntoBasket;
+﻿using Catalog.Contracts.Products.Features.GetProductById;
+
+namespace Basket.Basket.Features.AddItemIntoBasket;
 
 public record AddItemIntoBasketCommand(string UserName, 
     ShoppingCartItemDto ShoppingCartItem) 
@@ -23,7 +25,8 @@ public class AddItemIntoBasketCommandValidator
     }
 }   
 
-public class AddItemIntoBasketHandler(IBasketRepository repository)
+public class AddItemIntoBasketHandler(
+    IBasketRepository repository, ISender sender)
     : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
     public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, 
@@ -31,12 +34,18 @@ public class AddItemIntoBasketHandler(IBasketRepository repository)
     {
         var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
+        // TODO: Before add item into shopping cart, we should call Catalog Module GetProductById method 
+        // Get latest product information and set price and ProductName when adding item into shopping cart.
+        
+        var result = await sender.Send(
+            new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
+
         shoppingCart.AddItem(
             command.ShoppingCartItem.ProductId, 
             command.ShoppingCartItem.Quantity, 
             command.ShoppingCartItem.Color, 
-            command.ShoppingCartItem.Price, 
-            command.ShoppingCartItem.ProductName);
+            result.Product.Price, 
+            result.Product.Name);
 
         await repository.SaveChangesAsync(command.UserName, cancellationToken);
 
