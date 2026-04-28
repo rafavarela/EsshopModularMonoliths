@@ -15,6 +15,7 @@
   </Folder>
   <Folder Name="/Shared/">
     <Project Path="Shared/Shared.Contracts/Shared.Contracts.csproj" Id="a5392616-9b36-456c-aec9-6c813b98dee9" />
+    <Project Path="Shared/Shared.Messaging/Shared.Messaging.csproj" Id="72fec6f0-6a69-4f15-923f-31f30b3c2a92" />
     <Project Path="Shared/Shared/Shared.csproj" Id="b0b9abdd-cca4-4b86-a6eb-eb2054c66919" />
   </Folder>
   <Project Path="docker-compose.dcproj">
