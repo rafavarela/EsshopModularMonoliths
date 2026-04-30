@@ -9,6 +9,9 @@ services:
 
   seq:
     image: datalust/seq:2025.2
+  
+  messagebus:
+    image: rabbitmq:4.3-management
 
 volumes:
   postgres_eshopdb: 
