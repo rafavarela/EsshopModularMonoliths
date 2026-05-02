@@ -1,3 +1,8 @@
+//CREATE SCHEMA identity;
+//GRANT ALL ON SCHEMA identity TO postgres;
+
+using Keycloak.AuthServices.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) =>
@@ -25,6 +30,9 @@ builder.Services.AddMasstransitWithAssemblies(
     catalogAssembly, 
     basketAssembly);
 
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 // Module specific services
 builder.Services
     .AddCatalogModule(builder.Configuration)
@@ -42,9 +50,12 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.MapCarter();
+//app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(options => { });
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapCarter();
 
 await app.UseCatalogModule();
 await app.UseBasketModule();

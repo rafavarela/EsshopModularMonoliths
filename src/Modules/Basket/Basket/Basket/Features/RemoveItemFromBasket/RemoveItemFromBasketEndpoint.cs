@@ -6,8 +6,8 @@ public class RemoveItemFromBasketEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/basket/{userName}/items/{productId}", 
-            async ([FromRoute] string userName, 
+        app.MapDelete("/basket/{userName}/items/{productId}",
+            async ([FromRoute] string userName,
             [FromRoute] Guid productId,
             ISender sender) =>
         {
@@ -17,6 +17,11 @@ public class RemoveItemFromBasketEndpoint : ICarterModule
             var response = result.Adapt<RemoveItemFromBasketResponse>();
 
             return Results.Ok(response);
-        });
+        })
+        .Produces<RemoveItemFromBasketResponse>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Remove item from basket")
+        .WithDescription("Remove item from basket")
+        .RequireAuthorization();
     }
 }
